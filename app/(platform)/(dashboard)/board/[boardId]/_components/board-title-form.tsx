@@ -5,6 +5,7 @@ import { Board } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/form/form-input";
+import { updateBoard } from "@/actions/update-board";
 import { useAction } from "@/hooks/use-action";
 
 interface BoardTitleFormProps {
@@ -14,6 +15,15 @@ interface BoardTitleFormProps {
 export const BoardTitleForm = ({
   data,
 }: BoardTitleFormProps) => {
+  const { execute } = useAction(updateBoard, {
+    onSuccess: (data) => {
+      setTitle(data.title);
+      disableEditing();
+    },
+    onError: (error) => {
+    }
+  });
+
   const formRef = useRef<ElementRef<"form">>(null);
   const inputRef = useRef<ElementRef<"input">>(null);
 
