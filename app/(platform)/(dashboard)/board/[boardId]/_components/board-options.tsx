@@ -2,6 +2,7 @@
 
 import { MoreHorizontal, X } from "lucide-react";
 
+import { deleteBoard } from "@/actions/delete-board";
 import { useAction } from "@/hooks/use-action";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,14 @@ interface BoardOptionsProps {
 };
 
 export const BoardOptions = ({ id }: BoardOptionsProps) => {
+  const { execute, isLoading } = useAction(deleteBoard, {
+    onError: (error) => {
+    }
+  });
+
+  const onDelete = () => {
+    execute({ id });
+  };
 
   return (
     <Popover>
@@ -42,6 +51,8 @@ export const BoardOptions = ({ id }: BoardOptionsProps) => {
         </PopoverClose>
         <Button
           variant="ghost"
+          onClick={onDelete}
+          disabled={isLoading}
           className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
         >
           Delete this board
