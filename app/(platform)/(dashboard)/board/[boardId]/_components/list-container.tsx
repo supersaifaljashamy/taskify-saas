@@ -5,6 +5,7 @@ import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
 import { ListWithCards } from "@/types";
 import { useAction } from "@/hooks/use-action";
+import { updateListOrder } from "@/actions/update-list-order";
 
 import { ListForm } from "./list-form";
 import { ListItem } from "./list-item";
@@ -27,6 +28,13 @@ export const ListContainer = ({
   boardId,
 }: ListContainerProps) => {
   const [orderedData, setOrderedData] = useState(data);
+
+  const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+    },
+    onError: (error) => {
+    },
+  });
 
   useEffect(() => {
     setOrderedData(data);
@@ -56,6 +64,7 @@ export const ListContainer = ({
       ).map((item, index) => ({ ...item, order: index }));
 
       setOrderedData(items);
+      executeUpdateListOrder({ items, boardId });
     }
 
     // User moves a card
@@ -95,6 +104,10 @@ export const ListContainer = ({
         sourceList.cards = reorderedCards;
 
         setOrderedData(newOrderedData);
+        executeUpdateCardOrder({
+          boardId: boardId,
+          items: reorderedCards,
+        });
         // User moves the card to another list
       } else {
         // Remove card from the source list
@@ -116,6 +129,10 @@ export const ListContainer = ({
         });
 
         setOrderedData(newOrderedData);
+        executeUpdateCardOrder({
+          boardId: boardId,
+          items: destList.cards,
+        });
       }
     }
   }
