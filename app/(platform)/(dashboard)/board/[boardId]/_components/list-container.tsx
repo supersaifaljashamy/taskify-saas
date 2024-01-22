@@ -6,6 +6,7 @@ import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 import { ListWithCards } from "@/types";
 import { useAction } from "@/hooks/use-action";
 import { updateListOrder } from "@/actions/update-list-order";
+import { updateCardOrder } from "@/actions/update-card-order";
 
 import { ListForm } from "./list-form";
 import { ListItem } from "./list-item";
@@ -30,6 +31,13 @@ export const ListContainer = ({
   const [orderedData, setOrderedData] = useState(data);
 
   const { execute: executeUpdateListOrder } = useAction(updateListOrder, {
+    onSuccess: () => {
+    },
+    onError: (error) => {
+    },
+  });
+
+  const { execute: executeUpdateCardOrder } = useAction(updateCardOrder, {
     onSuccess: () => {
     },
     onError: (error) => {
