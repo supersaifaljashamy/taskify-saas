@@ -1,3 +1,4 @@
+import { ModalProvider } from "@/components/providers/modal-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const PlatformLayout = ({
@@ -7,6 +8,7 @@ const PlatformLayout = ({
 }) => {
   return (
     <ClerkProvider>
+      <ModalProvider />
         {children}
     </ClerkProvider>
   );
