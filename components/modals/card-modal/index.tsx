@@ -2,11 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
+import { CardWithList } from "@/types";
+import { fetcher } from "@/lib/fetcher";
 import { useCardModal } from "@/hooks/use-card-modal";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
-import { CardWithList } from "@/types";
-import { fetcher } from "@/lib/fetcher";
+import { Header } from "./header";
 
 
 export const CardModal = () => {
@@ -25,7 +26,10 @@ export const CardModal = () => {
       onOpenChange={onClose}
     >
       <DialogContent>
-        {cardData?.title}
+        {!cardData
+          ? <Header.Skeleton />
+          : <Header data={cardData} />
+        }
       </DialogContent>
     </Dialog>
   );
