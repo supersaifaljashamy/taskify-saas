@@ -9,6 +9,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import { Header } from "./header";
 import { Description } from "./description";
+import { Actions } from "./actions";
 
 
 export const CardModal = () => {
@@ -38,8 +39,12 @@ export const CardModal = () => {
                 ? <Description.Skeleton />
                 : <Description data={cardData} />
               }
-            </div>
+                        </div>
           </div>
+          {!cardData
+            ? <Actions.Skeleton />
+            : <Actions data={cardData} />
+          }
         </div>
       </DialogContent>
     </Dialog>
